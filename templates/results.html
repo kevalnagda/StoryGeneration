@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Results</h1>
+	
+	<!-- {% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			{% for category, message in messages %}
+				<h2>Theme: {{ message }}</h2>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+ -->
+	<h2>{{ result }}</h2>
+{% endblock %}

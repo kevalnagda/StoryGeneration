@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Theme</h1>
+
+	<form method="POST" action="">
+		{{ form.hidden_tag() }}
+		{{ form.theme }}
+		
+		<input type="submit" name="Select theme">
+
+		{% if form.theme.errors %}
+			{% for error in form.theme.errors %}
+				<span>{{ error }}</span>
+			{% endfor %}
+		{% endif %}
+	</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+I've made the wrapper in Flask
+
+Right now, its for 1 para
+
+I had to make a shit ton of changes in your combined.py and sample.py files
+
+see my changes and make others for para 2 accordingly
+
+and lawde, joh file nahi chahiye unko delete kar
+
+and add "save", "data" and "txt_sentoken" folder inside storygeneration folder - was huge ass toh I didn't push :P
+
+also, code ache se likha kar bc
+
+lub you :) <3<3<3
+
+Jai Hind
