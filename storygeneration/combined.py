@@ -15,6 +15,9 @@ from nltk.tokenize import word_tokenize
 from nltk import FreqDist, classify, NaiveBayesClassifier
 
 import re, string, random
+import os 
+import subprocess
+from subprocess import call
 
 from .sample import sample
 
@@ -93,13 +96,9 @@ test_data = dataset[7000:]
 classifier = NaiveBayesClassifier.train(train_data)
     
 #storygen
-    
-import os 
-import subprocess
-from subprocess import call
 
-def checkSent(out2, sentToken):
-    custom_tweet = out2
+def checkSent(out, sentToken):
+    custom_tweet = out
     custom_tokens = remove_noise(word_tokenize(custom_tweet))
     sent=classifier.classify(dict([token, True] for token in custom_tokens))
     if sent == sentToken:
@@ -107,14 +106,10 @@ def checkSent(out2, sentToken):
     else:
         return 0
 
-from .sample import sample
-
-def storyGen(sentToken1,sentToken2):
-	ip1='When the king heard that he admitted being a master-thief, he said that he would forgive him the attempt to steal the bird if he would go to the next kingdom and carry off the world\'s most beautiful princess, and bring her to him.'
-	print("1st para prompt:", ip1)
-	ip1len=len(ip1)
-	# print()
-
+def storyGen(sentToken1,sentToken2,prompt):
+	# ip1='When the king heard that he admitted being a master-thief, he said that he would forgive him the attempt to steal the bird if he would go to the next kingdom and carry off the world\'s most beautiful princess, and bring her to him.'
+	#print("1st para prompt:", ip1)
+	ip1=prompt
 	if sentToken1=='No' and sentToken2=='No':
 		flag = 1
 	else:
@@ -123,104 +118,54 @@ def storyGen(sentToken1,sentToken2):
 	bad_chars = ['  ', '\n', '\r'] 
 
 	while(True):
-		# out= subprocess.check_output(['python', 'sample.py', '--prime',str(ip1), '--pick','2', '--quiet'])
 
-		if flag==1:
-			out = sample(['--prime',str(ip1),'--pick','2','--quiet'])
-			# out = subprocess.call(['python', 'sample.py', '--prime',str(ip1), '--quiet'])
+		if flag==0:
+			out = sample(['--prime',str(ip1),'--quiet'])
 		else:
-			out = sample(['--prime',str(ip1),'--pick','2', '--pick','2','--quiet'])
-			# out = subprocess.call(['python', 'sample.py', '--prime',str(ip1), '--pick','2', '--quiet'])
-			# os.system('python sample.py --prime={} --quiet'.format(str(ip1)))
-			# f=open("output.txt", "r")
-			print(out)
-			print("/////////////////////////////////////")
-			# out=str(f.read())
-			# f.close()
-			# out=str(out)
-			# out=out.replace("\\n", "")
-			# out=out.replace("\\r", " ")
-			# out=out.replace("\\", "")
-			# out=out.replace("'", "")
-			# out=out.replace("b", "", 1)
+			out = sample(['--prime',str(ip1),'--pick','2','--quiet'])
+
 		out=out.strip()
 
-		return (out)
-
+		return(out)
+		
 		if flag==1:
-			print(out, flush="True")
+			#print(out, flush="True")
 			break
 		else:
 			flag2=checkSent(out, sentToken1)
 			if flag2==1:
-				print(out, flush="True")
+				#print(out, flush="True")
 				break
 
-		out1=str(out).split('.')
-		ip2=out1[-1]
-		ip2=ip2.strip('"')
-		ip2=ip2.strip()
-		ip2=out1[-1]
-		ip3=out1[-2]
-		ip2=ip3+ip2
+	out1=str(out).split('.')
+	ip2=out1[-1]
+	ip2=ip2.strip('"')
+	ip2=ip2.strip()
+	ip2=out1[-1]
+	ip3=out1[-2]
+	ip2=ip3+ip2
 
-		# print()
-		print("2nd para prompt:", ip2)
-		# ip2len=len(ip2)
-		# print()
+	# while(True):
 
-		'''while(True):
-			out2= subprocess.check_output(['python', 'sample.py', '--prime',str(ip2), '--pick','2', '--quiet'])
-			if flag==0:
-				subprocess.call(['python', 'sample.py', '--prime',str(ip2), '--quiet'])
-			else:
-				subprocess.call(['python', 'sample.py', '--prime',str(ip2), '--pick','2', '--quiet'])
-			#os.system('python sample.py --prime={} --quiet'.format(str(ip1)))
-			f=open("output.txt", "r")
-			out2=str(f.read())
-			f.close()
-			# out2=str(out2)
-			# out2=out2.replace("\\n", "")
-			# out2=out2.replace("\\r", " ")
-			# out2=out2.replace("\\", "")
-			# out2=out2.replace("'", "")
-			# out2=out2.replace("b", "", 1)
-			out2=out2.replace(ip2, '')
-			out2=out2.strip()
+		# if flag==0:
+			# out2 = sample(['--prime',str(ip2),'--quiet'])
+		# else:
+			# out2 = sample(['--prime',str(ip2),'--pick','2','--quiet'])
 
-			if flag==1:
-				print(out2, flush="True")
-				break
-			else:
-				flag2=checkSent(out, sentToken2)
-				if flag2==1:
-					print(out2, flush="True")
-					break'''
+		# out2=out2.strip()
 
-# def generateDefault():
-#     flag = 1
-#     sentToken1='No'
-#     sentToken2='No'
-#     storyGen(sentToken1,sentToken2)
+		# if flag==1:
+			#print(out2, flush="True")
+			# return(str(out+out2))
+			# break
+		# else:
+			# flag2=checkSent(out2, sentToken2)
+			# if flag2==1:
+				#print(out2, flush="True")
+				# return(str(out+out2))
+				# break
 
-# def generateCustom(genre):
-#     flag = 0
-#     theme = genre
-#     if theme=='Mystery':
-#         sentToken1='Negative'
-#         sentToken2='Positive'
-#     elif theme=='Thriller':
-#         sentToken1='Positive'
-#         sentToken2='Negative'
-#     elif theme=='Happy':
-#         sentToken1='Positive'
-#         sentToken2='Positive'
-#     elif theme=='Tragedy':
-#         sentToken1='Negative'
-#         sentToken2='Negative'
-#     storyGen(sentToken1,sentToken2)
-
-def generateStory(theme):
+def generateStory(theme, prompt):
 	if theme=='Mystery':
 		sentToken1='Negative'
 		sentToken2='Positive'
@@ -236,5 +181,5 @@ def generateStory(theme):
 	elif theme=='Default':
 		sentToken1='No'
 		sentToken2='No'
-	result = storyGen(sentToken1,sentToken2)
+	result = storyGen(sentToken1,sentToken2, prompt)
 	return(result)
