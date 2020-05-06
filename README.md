@@ -1,4 +1,4 @@
-# StoryGeneration
+# Hierarchical Story Generation
 
 ## Abstract
 
