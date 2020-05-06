@@ -9,7 +9,6 @@ app.config['SECRET_KEY'] = '5bd61c5f5aadc9cae395915a8753d577'
 def theme():
 	form = ThemeForm()
 	if form.validate_on_submit():
-		flash(form.theme.data)
 		result = generateStory(form.theme.data, form.prompt.data)
 		return render_template('results.html', result=result)
 	return render_template('theme.html', form=form)

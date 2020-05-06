@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 20 19:31:05 2019
-
-@author: Pratik
-"""
 import os 
 import subprocess
 from subprocess import call

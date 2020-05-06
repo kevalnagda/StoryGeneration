@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Mar  6 20:51:16 2020
-
-@author: Pratik
-"""
-
-#sentiment
-
 import nltk
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import twitter_samples, stopwords
@@ -107,8 +98,6 @@ def checkSent(out, sentToken):
         return 0
 
 def storyGen(sentToken1,sentToken2,prompt):
-	# ip1='When the king heard that he admitted being a master-thief, he said that he would forgive him the attempt to steal the bird if he would go to the next kingdom and carry off the world\'s most beautiful princess, and bring her to him.'
-	#print("1st para prompt:", ip1)
 	ip1=prompt
 	if sentToken1=='No' and sentToken2=='No':
 		flag = 1
@@ -144,26 +133,6 @@ def storyGen(sentToken1,sentToken2,prompt):
 	ip2=out1[-1]
 	ip3=out1[-2]
 	ip2=ip3+ip2
-
-	# while(True):
-
-		# if flag==0:
-			# out2 = sample(['--prime',str(ip2),'--quiet'])
-		# else:
-			# out2 = sample(['--prime',str(ip2),'--pick','2','--quiet'])
-
-		# out2=out2.strip()
-
-		# if flag==1:
-			#print(out2, flush="True")
-			# return(str(out+out2))
-			# break
-		# else:
-			# flag2=checkSent(out2, sentToken2)
-			# if flag2==1:
-				#print(out2, flush="True")
-				# return(str(out+out2))
-				# break
 
 def generateStory(theme, prompt):
 	if theme=='Mystery':

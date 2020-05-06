@@ -1,18 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Theme</h1>
+	<div>
+		<div class="container">
+			<br>
+			<br>
+			<h1 class="display-4">Story Generation</h1>
+			<p class="lead">A simple story generation application based on a Hierarchical approach.</p>
+			<hr class="my-4">
 
-	<form method="POST" action="">
-		{{ form.hidden_tag() }}
-		{{ form.prompt }}
-		{{ form.theme }}
-		
-		<input type="submit" name="Select theme">
+			<form method="POST" action="">
+				{{ form.hidden_tag() }}
+				<div class="form-group">
+					<p>Input a prompt below for your story to begin with...</p>
+					<div class="input-group">
+					 	<div class="input-group-prepend">
+					    	<span class="input-group-text">Prompt</span>
+					  	</div>
+					  	<textarea class="form-control" aria-label="With textarea" name="prompt" id="prompt"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+				    <label for="exampleFormControlSelect1">Select a theme for your story</label>
+			    	<select class="form-control" id="exampleFormControlSelect1" name="theme">
+				    	<option selected>Choose a valid theme</option>			    	
+						<option value="Mystery">Mystery</option>
+						<option value="Happy">Happy</option>
+						<option value="Tragedy">Tragedy</option>
+						<option value="Default">Default</option>						
+			    	</select>
+				</div>			
+				    
+				
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
 
-		{% if form.theme.errors %}
-			{% for error in form.theme.errors %}
-				<span>{{ error }}</span>
-			{% endfor %}
-		{% endif %}
-	</form>
+				{% if form.theme.errors %}
+					{% for error in form.theme.errors %}
+						<div class="alert alert-danger" role="alert">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			</form>
+		</div>
+	</div>
 {% endblock %}

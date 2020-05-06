@@ -34,7 +34,7 @@ def main():
 
 def sample(params):
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', type=int, default=100, help='number of words to sample')
+    parser.add_argument('-n', type=int, default=200, help='number of words to sample')
     parser.add_argument('--prime', type=str, default=' ', help='prime text')
     parser.add_argument('--pick', type=int, default=1, help='1 = weighted pick, 2 = beam search pick')
     parser.add_argument('--width', type=int, default=4, help='width of the beam search')
@@ -61,16 +61,9 @@ def sample(params):
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
             # text_file = open("output.txt", "w")
-            for _ in range(args.count):
-              # print("INSIDE SAMPLE")
-              #print(model.sample(sess, words, vocab, args.n, args.prime, args.sample, args.pick, args.width, args.quiet))
-              # n = text_file.write(str(model.sample(sess, words, vocab, args.n, args.prime, args.sample, args.pick, args.width, args.quiet)))
-              output1 = model.sample(sess, words, vocab, args.n, args.prime, args.sample, args.pick, args.width, args.quiet)
-              output2 = model.sample(sess, words, vocab, args.n, output1, args.sample, args.pick, args.width, args.quiet)
-              return(output1+output2)
-              # print("----------")
-              # print("\n")
-    # text_file.close()
+            for _ in range(args.count):              
+              output = model.sample(sess, words, vocab, args.n, args.prime, args.sample, args.pick, args.width, args.quiet)
+              return(output)
 
 if __name__ == '__main__':
     main()
